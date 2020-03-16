@@ -21,7 +21,7 @@ export default function Details({ navigation }) {
                 onChangeText={(text)=>changeHandle(text)}
                 />
                 <Button  title='add todo' color='coral' 
-                onPress={()=>h(navigation.getParam('item').key,text)}
+                onPress={()=>{h(navigation.getParam('item').key,text);setText('')}}
                     />
                 </View>
         </View>
