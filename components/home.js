@@ -7,12 +7,14 @@ import { StyleSheet
   , Alert
   , TouchableWithoutFeedback
   , Keyboard
-  , CheckBox } from 'react-native';
+  , CheckBox
+  , AsyncStorage,  
+  Button} from 'react-native';
 import Header from './header';
 import { MaterialIcons} from '@expo/vector-icons';
 // import TodoItem from './todoItem';
 import AddTodo from './addTodo';
-//import { CheckBox } from 'react-native-elements'
+
 
 export default function Home({ navigation }) {
   const [todos, setTodos] = useState([
@@ -20,7 +22,29 @@ export default function Home({ navigation }) {
     { text: 'create an app',time:'from 2 Pm to 4 Pm', key: '2' ,check:false},
     { text: 'play on the switch',time:'from 5 Pm to 6 Pm', key: '3',check:false }
   ]);
-  
+
+  const storeData = async () => {
+    try {
+      await AsyncStorage.setItem("items", JSON.stringify(todos));
+      console.log(JSON.stringify(todos))
+    } catch (error) {
+      // Error saving data
+      console.log(error)
+    }
+  };
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('items');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+      console.log('rerererer')
+    } catch (error) {
+      // Error retrieving data
+      console.log(error)
+    }
+  };
   const submitHandler = (text) => {
     if (text.length > 3) {
       setTodos((prevTodos) => {
@@ -73,13 +97,16 @@ export default function Home({ navigation }) {
       Keyboard.dismiss();
       console.log("Dismissed");
     }}>
+      
       <View style={styles.container}>
+        
         <Header />
         <View style = {styles.content}>
           <AddTodo submitHandler={submitHandler}
           />
 
           <View style ={styles.list}>
+          
             <FlatList 
               data={todos}
               renderItem={({ item }) => (
@@ -102,6 +129,12 @@ export default function Home({ navigation }) {
                 
               )}
             />
+           <Button  title='save' color='coral' 
+                onPress={()=>storeData()}
+                    />
+            <Button  title='get' color='coral' 
+                onPress={()=>retrieveData()}
+                    />
           </View>
         </View>
       </View>
