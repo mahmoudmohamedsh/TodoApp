@@ -55,6 +55,13 @@ export default function Home({ navigation }) {
       return prevTodos.filter(todo => {if((todo.key != key)== false){todo.check = !todo.check}return true });
     })
   }
+  //by3ml update
+  const PressUpdateHandler = (key,text) => {
+    setTodos((prevTodos)=>{
+      return prevTodos.filter(todo => {if((todo.key != key)== false){todo.text = text}return true });
+    })
+  }
+  // by3ml delete ll todo
   const ay5ra = (key) => {
     setTodos((prevTodos)=>{
       return prevTodos.filter(todo => todo.key != key);
@@ -84,7 +91,7 @@ export default function Home({ navigation }) {
                   </TouchableOpacity>
 
                   <View style={{ flexDirection: 'row',flex:1 }}> 
-                      <TouchableOpacity onPress={() => navigation.navigate('Details',item,submit)} style={{ flexDirection: 'row',flex:1 }}>
+                      <TouchableOpacity onPress={() => navigation.navigate('Details',{item,PressUpdateHandler},submit)} style={{ flexDirection: 'row',flex:1 }}>
                           <Text style={item.check?styles.t:styles.f}>{item.text}</Text>
                       </TouchableOpacity>
                     <CheckBox style={styles.c} value= {item.check} onChange={()=>pressHandler(item.key)}/>

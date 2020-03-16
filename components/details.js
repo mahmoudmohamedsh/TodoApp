@@ -1,19 +1,28 @@
-import React from 'react'
+import React ,{ useState }from 'react'
 import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard , Dimensions,TextInput,Button } from 'react-native';
 
 export default function Details({ navigation }) {
-   
+    const [text,setText] = useState('')
+
+    const changeHandle = ( text )=>{
+        setText(text)
+    }
+    const h = navigation.getParam('PressUpdateHandler');
     return (
         <View>
-            <Text>{ navigation.getParam('text') }</Text>
-            <Text>{ navigation.getParam('time') }</Text>
+            {console.log(navigation)}
+            {/* <Text>{ navigation.getParam('item').text }</Text>
+            <Text>{ navigation.getParam('item').time }</Text> */}
                 <View>
                 <TextInput 
                 // style = {styles.input}
-                placeholder = 'new todo ....'
-                // onChangeText={(text)=>changeHandle(text)}
+                // placeholder = 'new todo ....'
+                value={navigation.getParam('item').text }
+                onChangeText={(text)=>changeHandle(text)}
                 />
-                <Button  title='add todo' color='coral' />
+                <Button  title='add todo' color='coral' 
+                onPress={h(navigation.getParam('item').key,text)}
+                    />
                 </View>
         </View>
     )
