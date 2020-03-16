@@ -12,7 +12,7 @@ import { StyleSheet
   Button} from 'react-native';
 import Header from './header';
 import { MaterialIcons} from '@expo/vector-icons';
-// import TodoItem from './todoItem';
+import { Offline, Online } from "react-detect-offline";
 import AddTodo from './addTodo';
 
 
@@ -101,6 +101,8 @@ export default function Home({ navigation }) {
       <View style={styles.container}>
         
         <Header />
+        <Online><Text>Only shown when you're online</Text></Online>
+        <Offline><Text>Only shown offline (surprise!)</Text></Offline>
         <View style = {styles.content}>
           <AddTodo submitHandler={submitHandler}
           />
